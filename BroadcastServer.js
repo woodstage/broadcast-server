@@ -9,9 +9,13 @@ function BroadcastServer(port) {
 BroadcastServer.prototype.start = function (options = {}) {
     this.socket = dgram.createSocket("udp4");
     this.socket.on("error", options.onerror);
-    this.socket.on("message", options.onmessage);
+    this.socket.on("message", this.onmessage.bind(this, options.onmessage));
     this.socket.on("listening", options.onlistening.bind(null, this.socket));
     this.socket.bind(this.port, () => this.socket.setBroadcast(true));
+}
+
+BroadcastServer.prototype.onmessage = function(callback, msg, rinfo) {
+    callback(msg, rinfo);
 }
 
 BroadcastServer.prototype.send = function (data) {
@@ -20,6 +24,10 @@ BroadcastServer.prototype.send = function (data) {
         if (err) return console.log(err);
         console.log("message sent!");
     });
+}
+
+BroadcastServer.prototype.getLocalServers = function() {
+
 }
 
 module.exports = BroadcastServer;
