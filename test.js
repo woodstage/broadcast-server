@@ -4,8 +4,8 @@ const readline = require('readline');
 const server = new BroadcastServer(12345);
 
 server.start({
-    onmessage: (msg, rinfo) => {
-        console.log("server got: " + msg + " from " +
+    onmessage: (message, rinfo) => {
+        console.log("server got: " + message + " from " +
             rinfo.address + ":" + rinfo.port);
     },
     onlistening: (socket) => {
@@ -16,6 +16,14 @@ server.start({
     onerror: (err) => {
         console.log("server error:\n" + err.stack);
         server.close();
+    },
+    ononline: (server, servers) => {
+        console.log("server online: ", JSON.stringify(server));
+        console.log("online servers: ", JSON.stringify(servers));
+    },
+    onoffline: (server, servers) => {
+        console.log("server offline: ", JSON.stringify(server));
+        console.log("online servers: ", JSON.stringify(servers));
     }
 });
 
