@@ -1,1 +1,1 @@
-module.exports = require("./BroadcastServer");
+module.exports = require("./src/BroadcastServer");
