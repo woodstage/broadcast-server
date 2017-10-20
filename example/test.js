@@ -1,4 +1,4 @@
-const BroadcastServer = require("./BroadcastServer.js");
+const BroadcastServer = require("../src/BroadcastServer.js");
 const readline = require('readline');
 
 const server = new BroadcastServer(12345);
@@ -25,15 +25,4 @@ server.start({
         console.log("server offline: ", JSON.stringify(server));
         console.log("online servers: ", JSON.stringify(servers));
     }
-});
-
-const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-});
-
-rl.on('line', () => {
-    rl.question('Enter a message:', (answer) => {
-        server.send(answer)
-    })
 });
